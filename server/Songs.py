@@ -5,19 +5,45 @@ import pickle
 import ConfigParser
 import mpd
 import os
+import sys
 
-dbDir        = '/Users/ansi/PycharmProjects/RadioTiffy/DB'
-userNames    = ['Tiffany', 'Ansi']
-userMoods    = ['blacklist', 'sad', 'happy', 'lonely', 'morning', 'evening', 'sport']
+configFileName  = os.path.expanduser("~/.aldebaran.ini")
+userMoods       = ['blacklist', 'sad', 'happy', 'lonely', 'morning', 'evening', 'sport']
+dbDir           = '/Users/ansi/PycharmProjects/RadioTiffy/DB'
 
 class Songs:
 
     def __init__(self, mpdServer):
+        self._config     = ConfigParser.ConfigParser()
+        self._readConfig()
         self._users      = {}
         self._mpdServer  = mpdServer
         self._percentage = 20
-        for i in userNames:
+        for i in self._config.get('Songs','userNames').split(','):
             self._users[i] = User(i)
+
+    def _readConfig(self):
+        update = False
+        if os.path.isfile(configFileName):
+            print "Config file present"
+            self._config.read(configFileName)
+        else:
+            print "Config file not present"
+            update = True
+
+        if not self._config.has_section('Songs'):
+            print "Adding song part"
+            update = True
+            self._config.add_section('Songs')
+
+        if not self._config.has_option('Songs', 'userNames'):
+            print "No userNames Entry"
+            update = True
+            self._config.set('Songs','userNames', 'ansi,phawx,t1ntan')
+
+        if update:
+            with open(configFileName, 'w') as f:
+                self._config.write(f)
 
     def getSongs(self):
         # Get all blacklists
