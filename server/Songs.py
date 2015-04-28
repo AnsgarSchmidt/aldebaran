@@ -1,5 +1,3 @@
-__author__ = 'ansi'
-
 import random
 import pickle
 import ConfigParser
