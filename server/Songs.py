@@ -5,11 +5,10 @@ import pickle
 import ConfigParser
 import mpd
 import os
-import sys
 
-configFileName  = os.path.expanduser("~/.aldebaran.ini")
-userMoods       = ['blacklist', 'sad', 'happy', 'lonely', 'morning', 'evening', 'sport']
-dbDir           = '/Users/ansi/PycharmProjects/RadioTiffy/DB'
+homeDir          = os.path.expanduser("~/.aldebaran")
+configFileName   = homeDir + '/config.ini'
+userDefaultMoods = ['blacklist', 'sad', 'happy', 'lonely', 'morning', 'evening', 'sport']
 
 class Songs:
 
@@ -20,10 +19,15 @@ class Songs:
         self._mpdServer  = mpdServer
         self._percentage = 20
         for i in self._config.get('Songs','userNames').split(','):
-            self._users[i] = User(i)
+            self._users[i] = User(i.strip())
 
     def _readConfig(self):
         update = False
+
+        if not os.path.isdir(homeDir):
+            print "Creating homeDir"
+            os.makedirs(homeDir)
+
         if os.path.isfile(configFileName):
             print "Config file present"
             self._config.read(configFileName)
@@ -106,21 +110,23 @@ class Songs:
 class User:
 
     def __init__(self, name):
+        self._config     = ConfigParser.ConfigParser()
+        self._readConfig()
         self._name      = name
         self._active    = False
         self._playlists = {}
 
-        if not os.path.isdir(dbDir):
+        if not os.path.isdir(self._config.get("Songs",'dbDir')):
             print "DB Dir not presents"
-            os.mkdir(dbDir)
+            os.mkdir(self._config.get("Songs",'dbDir'))
 
-        fname = '%s/%s'%(dbDir,name)
+        fname = '%s/%s'%(self._config.get("Songs",'dbDir'), name)
         if not os.path.isdir(fname):
             print "User does not exists"
             os.mkdir(fname)
 
-        for i in userMoods:
-            fname = '%s/%s/%s.json'%(dbDir, name, i)
+        for i in userDefaultMoods:
+            fname = '%s/%s/%s.json'%(self._config.get("Songs",'dbDir'), name, i)
             self._playlists[i] = Playlist(i, name)
             self._playlists[i].setDBFileName(fname)
 
@@ -129,6 +135,34 @@ class User:
             else:
                 print "DB does not exists"
                 self._playlists[i].save()
+
+    def _readConfig(self):
+        update = False
+
+        if not os.path.isdir(homeDir):
+            print "Creating homeDir"
+            os.makedirs(homeDir)
+
+        if os.path.isfile(configFileName):
+            print "Config file present"
+            self._config.read(configFileName)
+        else:
+            print "Config file not present"
+            update = True
+
+        if not self._config.has_section('Songs'):
+            print "Adding Songs part"
+            update = True
+            self._config.add_section('Songs')
+
+        if not self._config.has_option('Songs', 'dbDir'):
+            print "No dbDir Entry"
+            update = True
+            self._config.set('Songs','dbDir', homeDir+"/DB")
+
+        if update:
+            with open(configFileName, 'w') as f:
+                self._config.write(f)
 
     def setActive(self, value):
         self._active = value
