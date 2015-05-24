@@ -25,7 +25,7 @@ podcastLinks = [
                 [999, TOP, 'http://downloads.bbc.co.uk/podcasts/radio4/myshakespeare/rss.xml'],
                 [999, TOP, 'http://downloads.bbc.co.uk/podcasts/worldservice/6min_vocab/rss.xml'],
                 [999, TOP, 'http://downloads.bbc.co.uk/podcasts/worldservice/6min_gram/rss.xml'],
-                [999, TOP, 'http://downloads.bbc.co.uk/podcasts/worldservice/tae/rss.xml'],
+                [ 10, TOP, 'http://downloads.bbc.co.uk/podcasts/worldservice/tae/rss.xml'],
                 [999, TOP, 'http://downloads.bbc.co.uk/podcasts/worldservice/how2/rss.xml'],
                 [999, TOP, 'http://downloads.bbc.co.uk/podcasts/worldservice/elt_drama/rss.xml'],
                 [ 10, TOP, 'http://www.ndr.de/ndr2/programm/podcast2966.xml'],
