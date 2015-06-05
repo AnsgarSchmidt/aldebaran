@@ -14,8 +14,13 @@ notifications:
       - travis@23-5.eu
     on_success: always
     on_failure: always
+  irc:
+    channels:
+      - "chat.freenode.net#radioaldebaran"
+    on_success: always
+    on_failure: always
 
 install: "pip install -r server/Pip-packages.txt"
 
 # command to run tests
-script: nosetests
+script: nosetests -v server/Test.py 
