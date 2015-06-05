@@ -14,7 +14,11 @@ notifications:
       - travis@23-5.eu
     on_success: always
     on_failure: always
-  irc: "chat.freenode.net#radioaldebaran"
+  irc:
+    channels:
+      - "chat.freenode.net#radioaldebaran"
+    on_success: always
+    on_failure: always
 
 install: "pip install -r server/Pip-packages.txt"
 
