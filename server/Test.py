@@ -1,14 +1,2 @@
-import unittest
-
-class TestSongs(unittest.TestCase):
-
-    @classmethod
-    def setUpClass(self):
-        pass
-
-    def test_helloWorld(self):
-        self.assertTrue(True)
-
-
-if __name__ == '__main__':
-    unittest.main()
+def test_helloWorld():
+    assert 1==1
