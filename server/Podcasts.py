@@ -81,39 +81,44 @@ class Podcast:
         self._active = value
 
     def refresh(self):
-        allLinks       = []
-        self._links = []
-        self._name  = 'NOT_SET'
-        fp = feedparser.parse(self._url)
-        if 'title' in fp['feed']:
-            self._name = fp['feed']['title']
-        else:
-            print "No title: %s" % self._url
-            self._name = self._url
-        for entries in fp['entries']:
-            for links in entries['links']:
-                if links['rel'] == 'enclosure':
-                    allLinks.append(links['href'])
-        if self._part == TOP:
-            counter = 0
-            for l in allLinks:
-                if counter < self._maxEpisodes:
-                    self._links.append(l)
-                    counter += 1
-        if self._part == END:
-            counter = len(allLinks)
-            for l in allLinks:
-                if counter < self._maxEpisodes:
-                    self._links.append(l)
-                counter -= 1
-        if self._part == ALL:
-            random.shuffle(allLinks)
-            counter = 0
-            for l in allLinks:
-                if counter < self._maxEpisodes:
-                    self._links.append(l)
-                    counter += 1
-        print "%d of %d episodes at %s"%(len(self._links), len(allLinks), self._name)
+        try:
+            allLinks       = []
+            self._links = []
+            self._name  = 'NOT_SET'
+            fp = feedparser.parse(self._url)
+            if 'title' in fp['feed']:
+                self._name = fp['feed']['title']
+            else:
+                print "No title: %s" % self._url
+                self._name = self._url
+            for entries in fp['entries']:
+                if 'links' in entries:
+                    for links in entries['links']:
+                        if links['rel'] == 'enclosure':
+                            allLinks.append(links['href'])
+            if self._part == TOP:
+                counter = 0
+                for l in allLinks:
+                    if counter < self._maxEpisodes:
+                        self._links.append(l)
+                        counter += 1
+            if self._part == END:
+                counter = len(allLinks)
+                for l in allLinks:
+                    if counter < self._maxEpisodes:
+                        self._links.append(l)
+                    counter -= 1
+            if self._part == ALL:
+                random.shuffle(allLinks)
+                counter = 0
+                for l in allLinks:
+                    if counter < self._maxEpisodes:
+                        self._links.append(l)
+                        counter += 1
+            print "%d of %d episodes at %s"%(len(self._links), len(allLinks), self._name)
+        except Exception as e:
+            print "Error in parsing feed:%s" % self._url
+            print e
 
 class Podcasts:
 
