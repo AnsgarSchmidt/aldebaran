@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Mqtt     import Mqtt
 from Songs    import Songs
 from Podcasts import Podcasts

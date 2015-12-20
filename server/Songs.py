@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import random
 import pickle
 import ConfigParser
@@ -76,7 +77,7 @@ class Songs:
                     if s.isPlayable():
                         newSongs.append(s)
 
-        #Load 10 songs at minimum in case there are not enough song in the playlists
+        #Load 100 songs at minimum in case there are not enough song in the playlists
         numNewSongs = max(100, int(len(userSongs) * (self._percentage / 100.0)))
         numNewSongs = min(numNewSongs, len(newSongs))
 

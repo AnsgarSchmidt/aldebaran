@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import mpd
 import json
 import paho.mqtt.client as mqtt
@@ -60,9 +61,22 @@ if __name__ == '__main__':
 
     currentSong = None
 
+    a = mpdServer.currentsong()
+
+    if 'x-albumuri' not in a:
+        print "Podcast"
+        print a
+
     while True:
         mpdServer.idle()
-        cs = Song(mpdServer.currentsong(), True)
-        if not cs == currentSong:
-            m.post("livingroom/radio/currentsong", str(cs))
-            currentSong = cs
+
+        if 'x-albumuri' not in mpdServer.currentsong():
+
+            m.post("livingroom/radio/currentpostcast", mpdServer.currentsong())
+
+        else:
+
+            cs = Song(mpdServer.currentsong(), True)
+            if not cs == currentSong:
+                m.post("livingroom/radio/currentsong", str(cs))
+                currentSong = cs
