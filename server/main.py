@@ -6,7 +6,7 @@ import time
 
 #http://pythonhosted.org/python-mpd2/topics/commands.html
 
-ServerName   = 'ansinas'
+ServerName   = 'hal'
 
 if __name__ == '__main__':
 
