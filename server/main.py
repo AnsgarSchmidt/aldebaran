@@ -34,7 +34,7 @@ if __name__ == '__main__':
         if index == 0:
             mpdServer.play()
         index += 1
-        if index%2 == 0 and len(podUrls) > 0:
+        if index % 2 == 0 and len(podUrls) > 0:
             mpdServer.add(podUrls.pop())
         time.sleep(2)
 
