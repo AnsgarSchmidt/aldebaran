@@ -10,16 +10,16 @@ class Mqtt(threading.Thread):
     def __init__(self, mpd, songs):
         threading.Thread.__init__(self)
         self._mqclient = mqtt.Client("Aldebaran", clean_session=True)
-        self._mpd = mpd
-        self._song = songs
+        self._mpd      = mpd
+        self._song     = songs
         self.setDaemon(True)
 
     def on_connect(self, client, userdata, rc, b):
-        print("Connected with result code "+str(rc))
+        print("Connected with result code " + str(rc))
         client.subscribe("livingroom/radio/#")
 
     def on_message(self, client, userdata, msg):
-        #print "Mq Received on channel %s -> %s" % (msg.topic, msg.payload)
+        print "Mq Received on channel %s -> %s" % (msg.topic, msg.payload)
         topics = msg.topic.split('/')
         if len(topics) == 6     and \
             topics[2] == 'song' and \
@@ -35,7 +35,7 @@ class Mqtt(threading.Thread):
             self._song.addSongToMoodList(user, mood, song, False)
 
     def run(self):
-        self._mqclient.connect("ansinas", 1883, 60)
+        self._mqclient.connect("cortex", 1883, 60)
         self._mqclient.on_connect = self.on_connect
         self._mqclient.on_message = self.on_message
         self._mqclient.loop_forever()
@@ -50,7 +50,7 @@ if __name__ == '__main__':
     print "MQTT"
 
     mpdServer = mpd.MPDClient()
-    mpdServer.connect('ansinas', 6600)
+    mpdServer.connect('hal', 6600)
     mpdServer.ping()
 
     songs = Songs(mpdServer)
@@ -64,5 +64,5 @@ if __name__ == '__main__':
         mpdServer.idle()
         cs = Song(mpdServer.currentsong(), True)
         if not cs == currentSong:
-            m.post("livingroom/radio/current/song", str(cs))
+            m.post("livingroom/radio/currentsong", str(cs))
             currentSong = cs

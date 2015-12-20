@@ -152,5 +152,5 @@ if __name__ == '__main__':
 
     print test.getNames()
     print len(test.getUrls())
-    test.setActive(test.getNames()[0],True)
+    test.setActive(test.getNames()[0], True)
     print len(test.getUrls())
