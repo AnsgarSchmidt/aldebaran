@@ -7,7 +7,7 @@ import time
 
 #http://pythonhosted.org/python-mpd2/topics/commands.html
 
-ServerName   = 'hal'
+ServerName   = '192.168.1.10'
 
 if __name__ == '__main__':
 
