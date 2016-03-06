@@ -46,7 +46,7 @@ podcastLinks = [
                 [ 10, TOP, 'http://www.inforadio.de/podcast/feeds/wissenswerte/wissenswerte.xml/feed=podcast.xml'],
                 [ 10, TOP, 'http://www1.wdr.de/radio/podcasts/fhe/alltagosman102.podcast'],
                 [ 10, TOP, 'http://www.ndr.de/podcast/podcast2956.xml'],
-                [ 10, TOP, 'http://arvid9.hipcast.com/rss/braincast.xml'],
+                [  0, TOP, 'http://arvid9.hipcast.com/rss/braincast.xml'],
                 [ 10, TOP, 'http://www.fraunhofer.de/de/rss/podcast.rss'],
                 [999, TOP, 'http://www1.swr.de/podcast/xml/swr1/rp/stenkelfeld.xml'],
                 [ 10, TOP, 'http://www1.wdr.de/radio/podcasts/wdr2/kino190.podcast'],
