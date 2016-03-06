@@ -230,12 +230,37 @@ class Song:
     def __init__(self, data, mpd):
         if mpd:
             self._data = {}
-            self._data['album']    =     data['album']
-            self._data['title']    =     data['title']
-            self._data['track']    = int(data['track'] )
-            self._data['artist']   =     data['artist']
-            self._data['file']     =     data['file']
-            self._data['time']     = int(data['time']  )
+
+            if 'album' in  data:
+                self._data['album']    =     data['album']
+            else:
+                self._data['album']    = "Not set"
+
+            if 'title' in data:
+                self._data['title']    =     data['title']
+            else:
+                self._data['title']    = "Not set"
+
+            if 'track' in data:
+                self._data['track']    = int(data['track'] )
+            else:
+                self._data['track']    = "Not set"
+
+            if 'artist' in data:
+                self._data['artist']   =     data['artist']
+            else:
+                self._data['artist']    = "Not set"
+
+            if 'file' in data:
+                self._data['file']     =     data['file']
+            else:
+                self._data['file']    = "Not set"
+
+            if 'time' in data:
+                 self._data['time']     = int(data['time']  )
+            else:
+                self._data['time']    = 0
+
             self._data['playlist'] = {}
         else:
             self._data  = data
