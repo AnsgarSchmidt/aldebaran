@@ -72,7 +72,7 @@ if __name__ == '__main__':
 
         if 'x-albumuri' not in mpdServer.currentsong():
 
-            m.post("livingroom/radio/currentpostcast", mpdServer.currentsong())
+            m.post("livingroom/radio/currentpostcast", str(mpdServer.currentsong()))
 
         else:
 
